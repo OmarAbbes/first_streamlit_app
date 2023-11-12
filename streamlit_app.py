@@ -30,5 +30,7 @@ import pandas
 
 #streamlit.dataframe(my_fruit_list)
 
+streamlit.header("Fruityvice Fruit Advice!")
+
 fruitebvice_responses = requests.get ("https://fruityvice.com/api/fruit/watermelon")
 streamlit.text (fruitebvice_responses.json())
