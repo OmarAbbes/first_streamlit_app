@@ -1,6 +1,8 @@
 import streamlit
 import requests
 import snowflake.connector 
+import pandas
+from urllib.error import URLError
 
 streamlit.title('My parents new healthy diner, Thanks !')
 streamlit.header('Breakfast Menu')
@@ -15,7 +17,6 @@ streamlit.text('🥗 Kale, Spinach & Rocket Smoothie')
 streamlit.text('🐔 Hard-Boiled Free-Range Egg')
 streamlit.text('🥑 🍞 Avocado Toast')
 
-import pandas
 #my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
 
 # Let's put a pick list here so they can pick the fruit they want to include 
@@ -42,6 +43,7 @@ fruitevice_responses = requests.get ("https://fruityvice.com/api/fruit/" + fruit
 fruityvice_normalized = pandas.json_normalize(fruitevice_responses.json())
 streamlit.dataframe(fruityvice_normalized)
 
+streamlit.stop()
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
 #my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
