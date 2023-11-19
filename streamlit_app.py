@@ -33,14 +33,20 @@ streamlit.text('🥑 🍞 Avocado Toast')
 #streamlit.dataframe(my_fruit_list)
 
 streamlit.header("Fruityvice Fruit Advice!")
+#create the repeatable code block (called a function)
+def get_fruit_data(this_fruit) : 
+    fruitevice_responses = requests.get ("https://fruityvice.com/api/fruit/" + this_fruit)
+    fruityvice_normalized = pandas.json_normalize(fruitevice_responses.json())  
+    return fruityvice_normalized
+
+#new section to display data
 try :
   fruit_choice = streamlit.text_input("What fruit would you like information about?")
   if not fruit_choice :
     streamlit.error("Please select a fruit to get information")
   else : 
-    fruitevice_responses = requests.get ("https://fruityvice.com/api/fruit/" + fruit_choice)
-    fruityvice_normalized = pandas.json_normalize(fruitevice_responses.json())
-    streamlit.dataframe(fruityvice_normalized)
+    back_from_function = get_fruit_data(fruit_choice)
+    streamlit.dataframe(back_from_function)
 except urlerror as e : 
   streamlit.error()
   
